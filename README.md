@@ -1,5 +1,12 @@
 # AWS Terraform MVP - File Storage Microservice
 
+![Terraform](https://img.shields.io/badge/Terraform-IaC-blueviolet?logo=terraform)
+![AWS](https://img.shields.io/badge/AWS-Cloud-orange?logo=amazon-aws)
+![EC2](https://img.shields.io/badge/AWS-EC2-orange?logo=amazon-aws)
+![S3](https://img.shields.io/badge/AWS-S3-green?logo=amazon-s3)
+![RDS](https://img.shields.io/badge/AWS-RDS-blue?logo=amazon-rds)
+![Python](https://img.shields.io/badge/Python-Flask-blue?logo=python)
+
 This project demonstrates a fully automated **Infrastructure-as-Code (IaC) deployment** of a minimal but realistic **file-storage microservice** on AWS using Terraform.  
 The solution provisions a secured network environment, a Flask-based web application running on EC2, an S3 bucket for object storage, and an RDS MySQL database, all integrated through IAM roles and security groups.
 
