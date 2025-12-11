@@ -1,0 +1,37 @@
+# -----------------------------------
+# Terraform
+# -----------------------------------
+.terraform/
+
+# State files – NEVER PUSH THESE
+terraform.tfstate
+terraform.tfstate.*
+*.tfstate.backup
+
+# Terraform temporary files
+crash.log
+crash.*.log
+
+# Local environment files
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# -----------------------------------
+# Python (Flask user_data only)
+# -----------------------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# -----------------------------------
+# OS/Editor Junk Files
+# -----------------------------------
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
