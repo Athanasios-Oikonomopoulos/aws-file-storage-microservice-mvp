@@ -28,6 +28,20 @@ The application is automatically deployed by a `user_data` script, meaning **no 
 
 ---
 
+## Why Some AWS Services Are Not Included
+
+This MVP intentionally focuses on a minimal set of AWS services (VPC, EC2, S3, RDS, IAM) to demonstrate core cloud architecture principles while staying fully within the **AWS Free Tier**.  
+Services such as ALB, Auto Scaling, Secrets Manager, CloudFront, or EFS were **not** included—not because they were overlooked, but because:
+
+- they are **outside** the scope of the Free Tier  
+- they incur **additional costs** even at minimal usage  
+- they are **not required** to demonstrate the core design pattern of a microservice architecture  
+- the goal of this MVP is to provide a **cost-efficient, fully functional, educational** deployment  
+
+This ensures that anyone reviewing or reproducing the project can deploy it safely without incurring unexpected AWS charges.
+
+---
+
 ## 2. AWS Components Explained
 
 ### **Virtual Private Cloud (VPC)**
@@ -242,6 +256,25 @@ Screenshot of the RDS MySQL instance running inside private subnets.
 Shows general S3 bucket configuration (private, encrypted, versioned).
 
 ![S3 Bucket Overview](images/s3-bucket-overview.png)
+
+---
+
+### **RDS Table: Stored Upload Metadata**
+To demonstrate the use of RDS within the microservice architecture, the application stores  
+a simple metadata record in the `uploads` table for every file uploaded to S3.
+
+Each record includes:
+- the **filename**
+- the **timestamp** of upload (as stored by the backend)
+
+This confirms that:
+- EC2 can successfully connect to the RDS instance in the private subnets  
+- IAM & Security Groups are correctly configured to allow EC2 → RDS communication  
+- The microservice uses the database in a practical, meaningful way  
+
+Below is the screenshot showing the contents of the table, retrieved via SSH from the EC2 instance:
+
+![RDS Uploads Table](images/rds-uploads-table.png)
 
 ---
 
