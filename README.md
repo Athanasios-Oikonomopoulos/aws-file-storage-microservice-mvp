@@ -336,6 +336,12 @@ The application logs each uploaded file into the `uploads` table inside RDS (fil
 
 ---
 
+## 8. Terraform Execution Proof (Validation, Plan, Apply)
+
+This section demonstrates the full Infrastructure-as-Code lifecycle for deploying the MVP microservice on AWS.
+
+---
+
 > **Important Setup Note**
 >
 > Before running `terraform apply`, two values must be configured by the user:
@@ -360,12 +366,6 @@ The application logs each uploaded file into the `uploads` table inside RDS (fil
 >    Without a valid key pair, Terraform cannot provision the EC2 instance and SSH will not work.
 
 These two prerequisites must be configured before deployment, otherwise the microservice will not initialize correctly.
-
----
-
-## 8. Terraform Execution Proof (Validation, Plan, Apply)
-
-This section demonstrates the full Infrastructure-as-Code lifecycle for deploying the MVP microservice on AWS.
 
 ---
 
