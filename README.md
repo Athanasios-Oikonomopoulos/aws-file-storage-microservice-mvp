@@ -140,7 +140,7 @@ It shows how users interact with the web application, how the EC2 instance commu
 
 ---
 
-## 4.1 How the Architecture Works (End-to-End Request Flow)
+## 5. How the Architecture Works (End-to-End Request Flow)
 
 This section explains the complete lifecycle of a user request, following the flow illustrated in the diagram.
 
@@ -180,14 +180,22 @@ Encryption, versioning, and owner-enforced controls ensure secure storage.
 
 ---
 
-### **4. EC2 → RDS Communication (Optional Metadata Layer)**
-If the application needs to store metadata or transactional data:
+### **4. EC2 → RDS Communication (Metadata Logging)**
+In this MVP, the RDS MySQL database is actively used by the application.  
+When a user uploads a file, the EC2 instance:
 
-- EC2 connects to the **RDS MySQL DB** through the private network  
-- The **RDS Security Group** allows MySQL (TCP 3306) **only from the EC2 Security Group**  
-- RDS resides inside **two private subnets** with no internet route  
+1. Connects to the RDS database over the private network  
+2. Inserts a metadata record (filename + timestamp) into the `uploads` table  
 
-This maintains backend isolation and prevents external access.
+This confirms that the microservice is not only storing files in S3 but also persisting metadata in a relational backend.
+
+Connectivity is enforced by the security model:
+
+- The **RDS Security Group** allows MySQL (TCP 3306) *only from the EC2 Security Group*  
+- RDS is deployed inside **two private subnets**, with **no Internet route**  
+- EC2 reaches RDS exclusively using internal VPC networking  
+
+This design maintains strict backend isolation, prevents public exposure of the database, and demonstrates a realistic multi-tier application architecture where the application layer communicates securely with a private database layer.
 
 ---
 
@@ -220,7 +228,7 @@ The EC2 instance handles application logic and interacts securely with S3 and RD
 
 ---
 
-## 5. Infrastructure Screenshots
+## 6. Infrastructure Screenshots
 
 This section provides visual verification of all deployed AWS resources created by Terraform.
 
@@ -259,7 +267,7 @@ Shows general S3 bucket configuration (private, encrypted, versioned).
 
 ---
 
-## 6. Microservice Web Application Screenshots
+## 7. Microservice Web Application Screenshots
 
 These screenshots demonstrate the fully functioning file-storage microservice deployed on the EC2 instance.
 
@@ -322,25 +330,13 @@ Displays uploaded files after using the microservice.
 ---
 
 ### **RDS Table: Stored Upload Metadata**
-To demonstrate the use of RDS within the microservice architecture, the application stores  
-a simple metadata record in the `uploads` table for every file uploaded to S3.
-
-Each record includes:
-- the **filename**
-- the **timestamp** of upload (as stored by the backend)
-
-This confirms that:
-- EC2 can successfully connect to the RDS instance in the private subnets  
-- IAM & Security Groups are correctly configured to allow EC2 → RDS communication  
-- The microservice uses the database in a practical, meaningful way  
-
-Below is the screenshot showing the contents of the table, retrieved via SSH from the EC2 instance:
+The application logs each uploaded file into the `uploads` table inside RDS (filename + timestamp), confirming successful EC2 → RDS communication.
 
 ![RDS Uploads Table](images/rds-uploads-table.png)
 
 ---
 
-## 7. Terraform Execution Proof (Validation, Plan, Apply)
+## 8. Terraform Execution Proof (Validation, Plan, Apply)
 
 This section demonstrates the full Infrastructure-as-Code lifecycle for deploying the MVP microservice on AWS.
 
@@ -381,7 +377,7 @@ Final confirmation that all resources were successfully created.
 
 ---
 
-## 8. Conclusion
+## 9. Conclusion
 
 This project demonstrates a complete, production-style AWS microservice implemented entirely through **Infrastructure-as-Code** using Terraform.  
 It showcases how multiple AWS services, VPC networking, EC2, S3, RDS, IAM, and Security Groups, can be combined into a secure, modular, and fully automated architecture.
