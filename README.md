@@ -259,25 +259,6 @@ Shows general S3 bucket configuration (private, encrypted, versioned).
 
 ---
 
-### **RDS Table: Stored Upload Metadata**
-To demonstrate the use of RDS within the microservice architecture, the application stores  
-a simple metadata record in the `uploads` table for every file uploaded to S3.
-
-Each record includes:
-- the **filename**
-- the **timestamp** of upload (as stored by the backend)
-
-This confirms that:
-- EC2 can successfully connect to the RDS instance in the private subnets  
-- IAM & Security Groups are correctly configured to allow EC2 → RDS communication  
-- The microservice uses the database in a practical, meaningful way  
-
-Below is the screenshot showing the contents of the table, retrieved via SSH from the EC2 instance:
-
-![RDS Uploads Table](images/rds-uploads-table.png)
-
----
-
 ## 6. Microservice Web Application Screenshots
 
 These screenshots demonstrate the fully functioning file-storage microservice deployed on the EC2 instance.
@@ -337,6 +318,25 @@ Successful file retrieval of the test image.
 Displays uploaded files after using the microservice.
 
 ![S3 Bucket Objects](images/s3-bucket-objects.png)
+
+---
+
+### **RDS Table: Stored Upload Metadata**
+To demonstrate the use of RDS within the microservice architecture, the application stores  
+a simple metadata record in the `uploads` table for every file uploaded to S3.
+
+Each record includes:
+- the **filename**
+- the **timestamp** of upload (as stored by the backend)
+
+This confirms that:
+- EC2 can successfully connect to the RDS instance in the private subnets  
+- IAM & Security Groups are correctly configured to allow EC2 → RDS communication  
+- The microservice uses the database in a practical, meaningful way  
+
+Below is the screenshot showing the contents of the table, retrieved via SSH from the EC2 instance:
+
+![RDS Uploads Table](images/rds-uploads-table.png)
 
 ---
 
