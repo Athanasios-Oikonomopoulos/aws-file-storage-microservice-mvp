@@ -336,6 +336,33 @@ The application logs each uploaded file into the `uploads` table inside RDS (fil
 
 ---
 
+> **Important Setup Note**
+>
+> Before running `terraform apply`, two values must be configured by the user:
+>
+> 1. **Your Public IP Address (`my_ip`)**  
+>    The Terraform variable `my_ip` is required to allow SSH access from your local machine:
+>    ```hcl
+>    variable "my_ip" {
+>      description = "Your public IP for SSH"
+>      type        = string
+>      default     = "x.x.x.x/32"
+>    }
+>    ```
+>    Replace the placeholder with your actual public IP (e.g., `203.0.113.5/32`).  
+>    If this value is not set correctly, Terraform will deploy the infrastructure, but SSH access to EC2 **will fail**.
+
+> 2. **Create an SSH Key Pair**  
+>    The EC2 instance requires an SSH key pair.  
+>    Make sure you have created one in AWS under:
+>    **EC2 → Key Pairs → Create key pair**  
+>    Then reference its name in your Terraform variables.  
+>    Without a valid key pair, Terraform cannot provision the EC2 instance and SSH will not work.
+
+These two prerequisites must be configured before deployment, otherwise the microservice will not initialize correctly.
+
+---
+
 ## 8. Terraform Execution Proof (Validation, Plan, Apply)
 
 This section demonstrates the full Infrastructure-as-Code lifecycle for deploying the MVP microservice on AWS.

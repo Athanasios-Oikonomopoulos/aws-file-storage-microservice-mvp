@@ -75,9 +75,9 @@ variable "instance_type" {
 
 # Restrict SSH access to your own public IP
 variable "my_ip" {
-  description = "Your public IP for SSH (x.x.x.x/32)"
+  description = "Your public IP for SSH"
   type        = string
-  default     = "188.193.3.204/32"
+  default     = "x.x.x.x/32"
 }
 
 # Required EC2 key pair for SSH access
